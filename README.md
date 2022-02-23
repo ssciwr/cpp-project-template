@@ -1,12 +1,20 @@
-# cpp-project-template
+# C++ Project Template
+
 A simple template repository to start a new C++ project using CMake.
+
+Click on the green [`Use this template`](https://github.com/ssciwr/cpp-project-template/generate) button to get started.
 
 If you are looking for more advanced features (such as Python bindings or integration with sites like ReadTheDocs, codecov, sonarcloud or PyPI)
 take a look at our [C++ Project Cookiecutter](https://github.com/ssciwr/cookiecutter-cpp-project)
 
-This example project contains the `adder` library, an application `adder_app` which uses this library, and a test-suite which tests the library.
+## Contents
 
-Any pull-requests or commits to the repository trigger GitHub Actions, which will compile the code and run the tests.
+This example project contains the `adder` library,
+an application `adder_app` which uses this library,
+and a test-suite which tests the library.
+
+Any pull-requests or commits to the repository trigger GitHub Actions,
+which will compile the code and run the tests.
 
 Project structure:
 
