@@ -1,5 +1,8 @@
 # cpp-project-template
-A template repository to start a new C++ project using CMake.
+A simple template repository to start a new C++ project using CMake.
+
+If you are looking for more advanced features (such as Python bindings or integration with sites like ReadTheDocs, codecov, sonarcloud or PyPI)
+take a look at our [C++ Project Cookiecutter](https://github.com/ssciwr/cookiecutter-cpp-project)
 
 This example project contains the `adder` library, an application `adder_app` which uses this library, and a test-suite which tests the library.
 
