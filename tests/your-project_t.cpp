@@ -1,7 +1,7 @@
-#include "adder/adder.hpp"
-#include "catch2/catch.hpp"
+#include "your-project/your-project.hpp"
+#include <catch2/catch_test_macros.hpp>
 
-using namespace adder;
+using namespace yourproject;
 
 TEST_CASE( "add_one", "[adder]" ){
   REQUIRE(add_one(0) == 1);

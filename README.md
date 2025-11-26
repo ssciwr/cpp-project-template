@@ -1,58 +1,65 @@
-# C++ Project Template
+# Welcome to Your Project
 
-A simple template repository to start a new C++ project using CMake.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Documentation Status](https://readthedocs.org/projects/None/badge/)](https://None.readthedocs.io/)
+[![codecov](https://codecov.io/none/None/None/branch/main/graph/badge.svg)](https://codecov.io/none/None/None)
 
-Click on the green [`Use this template`](https://github.com/ssciwr/cpp-project-template/generate) button to get started.
+# Prerequisites
 
-If you are looking for more advanced features (such as Python bindings or integration with sites like ReadTheDocs, codecov, sonarcloud or PyPI)
-take a look at our [C++ Project Cookiecutter](https://github.com/ssciwr/cookiecutter-cpp-project)
+Building Your Project requires the following software installed:
 
-## Contents
+* A C++20-compliant compiler
+* CMake `>= 3.9`
+* Doxygen (optional, documentation building is skipped if missing)
+* The testing framework [Catch2](https://github.com/catchorg/Catch2) for building the test suite
 
-This example project contains the `adder` library,
-an application `adder_app` which uses this library,
-and a test-suite which tests the library.
+# Building Your Project
 
-Any pull-requests or commits to the repository trigger GitHub Actions,
-which will compile the code and run the tests.
-
-Project structure:
-
-- [src](src)
-  - the `adder` library source code
-  - this is where the meat of the project is: the implementation
-- [include/adder](include/adder)
-  - the `adder` library headers
-  - the public interface of the library
-- [app](app)
-  - the application which uses the `adder` library
-- [tests](tests)
-  - the test code
-  - each `x.cpp` file has a corresponding `x_t.cpp` file here with tests
-- [ext](ext)
-  - external libraries, e.g. Catch2 testing framework
-- [.github/workflows/ci.yml](.github/workflows/ci.yml)
-  - the GitHub Actions configuration
-
-## Compiling
-
-To compile the project and run the tests:
+The following sequence of commands builds Your Project.
+It assumes that your current working directory is the top-level directory
+of the freshly cloned repository:
 
 ```
 mkdir build
 cd build
-cmake .. -DCMAKE_BUILD_TYPE=Release
-make
-make test
+cmake -DCMAKE_BUILD_TYPE=Release ..
+cmake --build .
 ```
 
-## Documentation
+The build process can be customized with the following CMake variables,
+which can be set by adding `-D<var>={ON, OFF}` to the `cmake` call:
 
-If you have Doxygen installed you can also build the documentation by enabling the `BUILD_DOCS` CMake option, and then running `make doxygen`:
+* `BUILD_TESTING`: Enable building of the test suite (default: `ON`)
+* `BUILD_DOCS`: Enable building the documentation (default: `ON`)
+
+
+
+# Testing Your Project
+
+When built according to the above explanation (with `-DBUILD_TESTING=ON`),
+the C++ test suite of `Your Project` can be run using
+`ctest` from the build directory:
 
 ```
-cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_DOCS=ON
-make doxygen
+cd build
+ctest
 ```
 
-This will generate the documentation in the `html` folder.
+
+# Documentation
+
+Your Project provides a Sphinx-based documentation, that can
+be browsed [online at readthedocs.org](https://your-project.readthedocs.io).
+To build it locally, first ensure the requirements are installed by running this command from the top-level source directory:
+
+```
+pip install -r doc/requirements.txt
+```
+
+Then build the sphinx documentation from the top-level build directory:
+
+```
+cmake --build . --target sphinx-doc
+```
+
+The web documentation can then be browsed by opening `doc/sphinx/index.html` in your browser.
