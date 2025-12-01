@@ -63,3 +63,7 @@ cmake --build . --target sphinx-doc
 ```
 
 The web documentation can then be browsed by opening `doc/sphinx/index.html` in your browser.
+## Acknowledgments
+
+This repository was set up using the [SSC Cookiecutter for C++ Packages](https://github.com/ssciwr/cookiecutter-cpp-project).
+
