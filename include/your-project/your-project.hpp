@@ -11,6 +11,7 @@ namespace yourproject {
  * @param x The number to increase
  * @returns the successor of x
  */
-int add_one(int x);
+int
+add_one(int x);
 
 } // namespace yourproject

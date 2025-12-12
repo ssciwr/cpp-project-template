@@ -89,7 +89,7 @@ jobs:
         sudo cmake --build . --target install
 
 
-    - name: Creat cmake build directory
+    - name: Create cmake build directory
       run: cmake -E make_directory ${{ github.workspace }}/build
 
     - name: configure cmake
@@ -120,4 +120,3 @@ jobs:
       with:
         fail_ci_if_error: true
         files: ${{github.workspace}}/coverage.info
-
