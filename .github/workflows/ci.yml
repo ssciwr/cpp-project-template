@@ -69,7 +69,7 @@ jobs:
       shell: bash
       working-directory: ${{ github.workspace }}/build
       run: |
-        cmake $GITHUB_WORKSPACE -DCMAKE_CXX_FLAGS="--coverage  -O0 -g" -Dyour-project_BUILD_TESTING=ON -DCMAKE_EXE_LINKER_FLAGS="--coverage" -Dyour-project_BUILD_DOCS=OFF
+        cmake $GITHUB_WORKSPACE -DCMAKE_CXX_FLAGS="--coverage" -Dyour-project_BUILD_TESTING=ON -Dyour-project_BUILD_DOCS=OFF
 
     - name: Build
       shell: bash
