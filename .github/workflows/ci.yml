@@ -1,15 +1,21 @@
 name: CI
 
 on:
+  # We run CI on pushes to the main branch
   push:
-    branches: [ main ]
+    branches:
+      - main
+  # and on all pull requests to the main branch
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
+  # as well as upon manual triggers through the 'Actions' tab of the Github UI
+  workflow_dispatch:
 
 jobs:
   build-and-test:
-    name: Testing on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
+    name: Testing on ${{matrix.os}}
+    runs-on: ${{matrix.os}}
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
@@ -17,20 +23,73 @@ jobs:
     steps:
     - uses: actions/checkout@v6
 
-    - name: make build directory
-      run: cmake -E make_directory ${{runner.workspace}}/build
 
-    - name: configure cmake
-      shell: bash
-      working-directory: ${{runner.workspace}}/build
-      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=Debug
+    - name: Install Doxygen
+      uses: ssciwr/doxygen-install@v1
 
-    - name: build
+    - name: Make build directory
+      run: cmake -E make_directory ${{ github.workspace }}/build
+
+    - name: Configure cmake
       shell: bash
-      working-directory: ${{runner.workspace}}/build
+      working-directory: ${{ github.workspace }}/build
+      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=Debug -Dyour-project_BUILD_TESTING=ON -Dyour-project_BUILD_DOCS=OFF -Dyour-project_BUILD_PYTHON=OFF
+
+    - name: Build
+      shell: bash
+      working-directory: ${{ github.workspace }}/build
       run: cmake --build .
 
-    - name: run tests
+    - name: Run tests
       shell: bash
-      working-directory: ${{runner.workspace}}/build
-      run: ctest --output-on-failure
+      working-directory: ${{ github.workspace }}/build
+      run: ctest
+
+
+  coverage-test:
+    name: Coverage Testing
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v6
+
+
+    - name: Install LCov
+      run: |
+        sudo apt-get install -y lcov
+
+    - name: Install Doxygen
+      uses: ssciwr/doxygen-install@v1
+
+
+    - name: Create cmake build directory
+      run: cmake -E make_directory ${{ github.workspace }}/build
+
+    - name: Configure cmake
+      shell: bash
+      working-directory: ${{ github.workspace }}/build
+      run: |
+        cmake $GITHUB_WORKSPACE -DCMAKE_CXX_FLAGS="--coverage  -O0 -g" -Dyour-project_BUILD_TESTING=ON -DCMAKE_EXE_LINKER_FLAGS="--coverage" -Dyour-project_BUILD_DOCS=OFF
+
+    - name: Build
+      shell: bash
+      working-directory: ${{ github.workspace }}/build
+      run: cmake --build .
+
+
+    - name: Run tests
+      shell: bash
+      working-directory: ${{ github.workspace }}/build
+      run: ctest
+
+    - name: Collect coverage report
+      shell: bash
+      working-directory: ${{ github.workspace }}
+      run: |
+        lcov --directory ./build/src --capture --output-file coverage.info --ignore-errors mismatch,unused --exclude '*/catch2/*'
+
+    - name: Upload C++ coverage to Codecov
+      uses: codecov/codecov-action@v5
+      with:
+        fail_ci_if_error: true
+        files: ${{github.workspace}}/coverage.info
