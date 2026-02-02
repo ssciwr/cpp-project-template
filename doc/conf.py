@@ -20,7 +20,7 @@ import subprocess
 # -- Project information -----------------------------------------------------
 
 project = 'your-project'
-copyright = '2025, Your Name'
+copyright = '2026, Your Name'
 author = 'Your Name'
 
 # -- General configuration ---------------------------------------------------
@@ -66,8 +66,6 @@ if read_the_docs_build:
     cwd = os.getcwd()
     os.makedirs("build-cmake", exist_ok=True)
     builddir = os.path.join(cwd, "build-cmake")
-    subprocess.check_call(
-        "cmake -DBUILD_DOCS=ON -DBUILD_TESTING=OFF  ../..".split(), cwd=builddir
-    )
-    subprocess.check_call("cmake --build . --target doxygen".split(), cwd=builddir)
+    subprocess.check_call("cmake -Dyour-project_BUILD_DOCS=ON -Dyour-project_BUILD_TESTING=OFF  ../..".split(), cwd=builddir)
+    subprocess.check_call("cmake --build . --target your-project-doxygen".split(), cwd=builddir)
     breathe_projects["your-project"] = os.path.join(builddir, "doc", "xml")

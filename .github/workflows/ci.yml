@@ -11,8 +11,6 @@ on:
       - main
   # as well as upon manual triggers through the 'Actions' tab of the Github UI
   workflow_dispatch:
-env:
-  CATCH2_VERSION: 3.11.0
 
 jobs:
   build-and-test:
@@ -26,41 +24,23 @@ jobs:
     - uses: actions/checkout@v6
 
 
+    - name: Install Doxygen
+      uses: ssciwr/doxygen-install@v1
 
-    - name: Install Catch2 (Linux + MacOS)
-      if: runner.os != 'Windows'
-      run: |
-        git clone -b v$CATCH2_VERSION https://github.com/catchorg/Catch2.git
-        cd Catch2
-        mkdir build
-        cd build
-        cmake -DBUILD_TESTING=OFF  ..
-        sudo cmake --build . --target install
-
-    - name: Install Catch2 (Windows)
-      if: runner.os == 'Windows'
-      run: |
-        git clone -b v$Env:CATCH2_VERSION https://github.com/catchorg/Catch2.git
-        cd Catch2
-        mkdir build
-        cd build
-        cmake -DBUILD_TESTING=OFF  ..
-        cmake --build . --target install
-
-    - name: make build directory
+    - name: Make build directory
       run: cmake -E make_directory ${{ github.workspace }}/build
 
-    - name: configure cmake
+    - name: Configure cmake
       shell: bash
       working-directory: ${{ github.workspace }}/build
-      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=Debug -DBUILD_DOCS=OFF
+      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=Debug -Dyour-project_BUILD_DOCS=OFF -Dyour-project_BUILD_PYTHON=OFF
 
-    - name: build
+    - name: Build
       shell: bash
       working-directory: ${{ github.workspace }}/build
       run: cmake --build .
 
-    - name: run tests
+    - name: Run tests
       shell: bash
       working-directory: ${{ github.workspace }}/build
       run: ctest
@@ -78,42 +58,35 @@ jobs:
       run: |
         sudo apt-get install -y lcov
 
-
-    - name: Install Catch2
-      run: |
-        git clone -b v$CATCH2_VERSION https://github.com/catchorg/Catch2.git
-        cd Catch2
-        mkdir build
-        cd build
-        cmake -DBUILD_TESTING=OFF  ..
-        sudo cmake --build . --target install
+    - name: Install Doxygen
+      uses: ssciwr/doxygen-install@v1
 
 
     - name: Create cmake build directory
       run: cmake -E make_directory ${{ github.workspace }}/build
 
-    - name: configure cmake
+    - name: Configure cmake
       shell: bash
       working-directory: ${{ github.workspace }}/build
       run: |
-        cmake $GITHUB_WORKSPACE -DCMAKE_CXX_FLAGS="--coverage" -DBUILD_DOCS=OFF
+        cmake $GITHUB_WORKSPACE -DCMAKE_CXX_FLAGS="--coverage" -Dyour-project_BUILD_DOCS=OFF
 
-    - name: build
+    - name: Build
       shell: bash
       working-directory: ${{ github.workspace }}/build
       run: cmake --build .
 
 
-    - name: run tests
+    - name: Run tests
       shell: bash
       working-directory: ${{ github.workspace }}/build
       run: ctest
 
-    - name: collect coverage report
+    - name: Collect coverage report
       shell: bash
       working-directory: ${{ github.workspace }}
       run: |
-        lcov --directory ./build/src --capture --output-file coverage.info --ignore-errors mismatch --exclude '*/catch2/*'
+        lcov --directory ./build/src --capture --output-file coverage.info --ignore-errors mismatch,unused --exclude '*/catch2/*'
 
     - name: Upload C++ coverage to Codecov
       uses: codecov/codecov-action@v5
