@@ -10,7 +10,7 @@ authors:
   - name: "Your Name"
     orcid: "https://orcid.org/0000-0000-0000-0000"
 version: 0.0.1
-date-released: "2026-03-26"
+date-released: "2026-06-18"
 identifiers:
   - description: This is a collection of archived snapshots of this project.
     type: doi
