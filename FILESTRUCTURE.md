@@ -32,6 +32,8 @@ This is an explanation of the repository's file structure:
   * `doc/requirements-rtd.txt` collect a list of dependencies that need to be installed
     on the Readthedocs build servers.
 * Configuration for CI/Code analysis/Documentation services
+  * `.pre-commit-config.yaml` contains a configuration for the [pre-commit](https://pre-commit.com/)
+    tool. It was added because the `pre-commit` tool was found in your Python environment.
   * `.github/workflows/ci.yml` describes the Github Workflow for Continuous
     integration. For further reading on workflow files, we recommend the
     [introduction into Github Actions](https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/introduction-to-github-actions)

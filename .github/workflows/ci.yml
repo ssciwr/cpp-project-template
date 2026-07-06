@@ -93,4 +93,3 @@ jobs:
       with:
         fail_ci_if_error: true
         files: ${{github.workspace}}/coverage.info
-
