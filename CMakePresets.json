@@ -1,0 +1,86 @@
+{
+  "version": 8,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 28,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "base",
+      "hidden": true,
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": true,
+        "your-project_BUILD_DOCS": false,
+        "your-project_BUILD_TESTING": false
+      }
+    },
+    {
+      "name": "debug",
+      "displayName": "Debug",
+      "description": "Debug build",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "release",
+      "displayName": "Release",
+      "description": "Release build",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "documentation",
+      "displayName": "Release build with documentation",
+      "description": "Release build with Doxygen and Sphinx enabled",
+      "inherits": "release",
+      "cacheVariables": {
+        "your-project_BUILD_DOCS": true
+      }
+    },
+    {
+      "name": "test",
+      "displayName": "Debug with tests",
+      "description": "Debug build with the C++ test suite enabled",
+      "inherits": "debug",
+      "cacheVariables": {
+        "your-project_BUILD_TESTING": true
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "debug",
+      "configurePreset": "debug"
+    },
+    {
+      "name": "release",
+      "configurePreset": "release"
+    },
+    {
+      "name": "documentation",
+      "configurePreset": "documentation",
+      "targets": [
+        "your-project-sphinx-doc"
+      ]
+    },
+    {
+      "name": "test",
+      "configurePreset": "test"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "test",
+      "configurePreset": "test",
+      "output": {
+        "outputOnFailure": true
+      }
+    }
+  ]
+}

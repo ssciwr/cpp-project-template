@@ -31,7 +31,6 @@ which can be set by adding `-D<var>={ON, OFF}` to the `cmake` call:
 * `your-project_BUILD_DOCS`: Enable building the documentation (default: `ON`)
 
 
-
 # Testing Your Project
 
 When built according to the above explanation (with `-Dyour-project_BUILD_TESTING=ON`),
@@ -43,9 +42,7 @@ cd build
 ctest
 ```
 
-
 # Documentation
-
 Your Project provides a Sphinx-based documentation, that can
 be browsed [online at readthedocs.org](https://your-project.readthedocs.io).
 To build it locally, first ensure the requirements are installed by running this command from the top-level source directory:
@@ -61,6 +58,8 @@ cmake --build build --target sphinx-doc
 ```
 
 The web documentation can then be browsed by opening `build/doc/sphinx/index.html` in your browser.
+
+
 ## Acknowledgments
 
 This repository was set up using the [SSC Cookiecutter for C++ Packages](https://github.com/ssciwr/cookiecutter-cpp-project).

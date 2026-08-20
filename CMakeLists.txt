@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.23)
+cmake_minimum_required(VERSION 3.28)
 
 # Set a name and a version number for your project:
 project(your-project
@@ -20,7 +20,6 @@ endif()
 
 # Compile the library
 add_subdirectory(src)
-
 
 if(PROJECT_IS_TOP_LEVEL)
   # Compile the application executable

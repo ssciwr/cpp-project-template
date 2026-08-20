@@ -23,28 +23,20 @@ jobs:
     steps:
     - uses: actions/checkout@v7
 
-
     - name: Install Doxygen
       uses: ssciwr/doxygen-install@v2
 
-    - name: Make build directory
-      run: cmake -E make_directory ${{ github.workspace }}/build
-
     - name: Configure cmake
       shell: bash
-      working-directory: ${{ github.workspace }}/build
-      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=Debug -Dyour-project_BUILD_TESTING=ON -Dyour-project_BUILD_DOCS=OFF -Dyour-project_BUILD_PYTHON=OFF
+      run: cmake --preset test
 
     - name: Build
       shell: bash
-      working-directory: ${{ github.workspace }}/build
-      run: cmake --build .
+      run: cmake --build --preset test
 
     - name: Run tests
       shell: bash
-      working-directory: ${{ github.workspace }}/build
-      run: ctest
-
+      run: ctest --preset test
 
   coverage-test:
     name: Coverage Testing
@@ -53,7 +45,6 @@ jobs:
     steps:
     - uses: actions/checkout@v7
 
-
     - name: Install LCov
       run: |
         sudo apt-get install -y lcov
@@ -61,26 +52,20 @@ jobs:
     - name: Install Doxygen
       uses: ssciwr/doxygen-install@v2
 
-
-    - name: Create cmake build directory
-      run: cmake -E make_directory ${{ github.workspace }}/build
-
     - name: Configure cmake
       shell: bash
-      working-directory: ${{ github.workspace }}/build
       run: |
-        cmake $GITHUB_WORKSPACE -DCMAKE_CXX_FLAGS="--coverage" -Dyour-project_BUILD_TESTING=ON -Dyour-project_BUILD_DOCS=OFF
+        cmake --preset test \
+          -DCMAKE_CXX_FLAGS="--coverage -fprofile-update=atomic -O0 -g" \
+          -DCMAKE_EXE_LINKER_FLAGS="--coverage"
 
     - name: Build
       shell: bash
-      working-directory: ${{ github.workspace }}/build
-      run: cmake --build .
-
+      run: cmake --build --preset test
 
     - name: Run tests
       shell: bash
-      working-directory: ${{ github.workspace }}/build
-      run: ctest
+      run: ctest --preset test
 
     - name: Collect coverage report
       shell: bash

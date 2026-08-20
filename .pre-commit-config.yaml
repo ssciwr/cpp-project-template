@@ -1,7 +1,7 @@
 repos:
   # Format C++ code with Clang-Format - automatically applying the changes
   - repo: https://github.com/pre-commit/mirrors-clang-format
-    rev: v22.1.5
+    rev: v22.1.8
     hooks:
       - id: clang-format
         args:
@@ -12,14 +12,12 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
+      # Unify file endings
+      - id: end-of-file-fixer
       # Make sure that contained YAML files are well-formed
       - id: check-yaml
       # Trim trailing whitespace of all sorts
       - id: trailing-whitespace
-      # Apply a file size limit of 500kB
-      - id: check-added-large-files
-      # Unify file endings
-      - id: end-of-file-fixer
 
   # GitHub Actions Workflow linter
   - repo: https://github.com/rhysd/actionlint

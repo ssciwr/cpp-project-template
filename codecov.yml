@@ -20,6 +20,5 @@ comment:
   require_changes: no
 
 ignore:
-  - app
-  - "**/tests"
+  - app  - "**/tests"
   - "**/Catch2"
