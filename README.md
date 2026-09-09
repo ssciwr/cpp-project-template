@@ -9,7 +9,7 @@
 Building Your Project requires the following software installed:
 
 * A C++20-compliant compiler
-* CMake `>= 3.23`
+* CMake `>= 3.28`
 * Doxygen (optional, documentation building is skipped if missing)
 * The testing framework [Catch2](https://github.com/catchorg/Catch2) for building the test suite
 
@@ -30,6 +30,14 @@ which can be set by adding `-D<var>={ON, OFF}` to the `cmake` call:
 * `your-project_BUILD_TESTING`: Enable building of the test suite (default: `ON`)
 * `your-project_BUILD_DOCS`: Enable building the documentation (default: `ON`)
 
+Alternatively, the available CMake presets can be displayed via `cmake --list-presets=all`. For example, the test workflow preset can be invoked with
+
+```
+cmake --workflow --preset test
+```
+
+It configures the project in debug mode, builds the test executables, and runs the tests, all in one go.
+
 
 # Testing Your Project
 
@@ -43,9 +51,7 @@ ctest
 ```
 
 # Documentation
-Your Project provides a Sphinx-based documentation, that can
-be browsed [online at readthedocs.org](https://your-project.readthedocs.io).
-To build it locally, first ensure the requirements are installed by running this command from the top-level source directory:
+Your Project provides a Sphinx-based documentation, that can be browsed [online at readthedocs.org](https://your-project.readthedocs.io). To build it locally, first ensure the requirements are installed by running this command from the top-level source directory:
 
 ```
 pip install -r doc/requirements.txt

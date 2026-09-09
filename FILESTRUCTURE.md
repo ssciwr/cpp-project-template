@@ -16,6 +16,7 @@ This is an explanation of the repository's file structure:
     the `CMakeLists.txt` file from the directory `<dir>` is immediately executed. A comprehensive
     reference of CMake's capabilities can be found in the [official CMake docs](https://cmake.org/documentation/).
     A well-written, opinionated book for beginners and experts is [Modern CMake](https://cliutils.gitlab.io/modern-cmake/).
+  * `CMakePresets.json` defines convenient presets for the configuration, building, testing and workflow stages. Available presets can be queried with `cmake --list-presets=all`.
 * Documentation configuration files
   * The Doxygen documentation is configured directly from `doc/CMakeLists.txt`.
     To further configure the build, you can check the [Doxygen Configuration Manual](https://www.doxygen.nl/manual/config.html)
